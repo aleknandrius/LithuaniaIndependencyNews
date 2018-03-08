@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.telesoftas.lithuaniaindependencynews"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release
+    }
+    Properties properties = new Properties()
+    File propertiesFile = project.rootProject.file('signing.properties')
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.newDataInputStream())
+        if (properties.containsKey('STORE_FILE')
+                && properties.containsKey('STORE_PASSWORD')
+                && properties.containsKey('KEY_ALIAS')
+                && properties.containsKey('KEY_PASSWORD')) {
+            signingConfigs.release.storeFile = file(properties['STORE_FILE'])
+            signingConfigs.release.storePassword = properties['STORE_PASSWORD']
+            signingConfigs.release.keyAlias = properties['KEY_ALIAS']
+            signingConfigs.release.keyPassword = properties['KEY_PASSWORD']
+        }
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            buildConfigField "String", "REST_API_URL", "\"https://newsapi.org/\""
+            buildConfigField "String", "API_VERSION", "\"V2/\""
+            buildConfigField "String", "API_KEY", "\"57a79eac5a8f44efa2bd3408139b83f3\""
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        debug.java.srcDirs += 'src/debug/kotlin'
+        release.java.srcDirs += 'src/release/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+    lintOptions {
+        disable 'InvalidPackage', 'PrivateResource', 'MissingTranslation'
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
