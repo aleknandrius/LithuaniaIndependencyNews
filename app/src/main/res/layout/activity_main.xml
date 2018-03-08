@@ -25,7 +25,6 @@
 
     </android.support.v7.widget.Toolbar>
 
-
     <FrameLayout
         android:id="@+id/fragmentFrameLayout"
         android:layout_width="match_parent"

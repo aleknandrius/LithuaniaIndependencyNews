@@ -26,7 +26,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         fun createIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
+            return Intent(
+                    context,
+                    MainActivity::class.java
+            )
         }
     }
 }
