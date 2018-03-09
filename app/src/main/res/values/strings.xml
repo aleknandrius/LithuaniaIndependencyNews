@@ -6,8 +6,13 @@
     <string name="network_error_message_no_server_respond">Server is not responding, please contact administrator</string>
     <string name="network_error_message_connection_lost">Connection lost</string>
     <string name="network_error_message_unknown">Unknown error</string>
+
+    <!-- dialog -->
     <string name="dialog_button_label_ok">Ok</string>
     <string name="dialog_button_label_decline">Cancel</string>
     <string name="dialog_button_label_accept">Accept</string>
+
+    <!-- article details -->
+    <string name="article_details_button">Read full article online</string>
 
 </resources>

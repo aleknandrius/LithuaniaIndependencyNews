@@ -15,6 +15,9 @@
             android:name=".main.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".details.ArticleDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".landing.SplashScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Splash">
