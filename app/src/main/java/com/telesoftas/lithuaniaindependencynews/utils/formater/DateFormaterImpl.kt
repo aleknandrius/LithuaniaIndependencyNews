@@ -7,7 +7,7 @@ import java.util.*
 class DateFormaterImpl: DateFormater {
     override fun getFormatedString(date: String): String {
         return try {
-            var parsedDate = SimpleDateFormat(DATE_FORMAT_PARSED).parse(date)
+            val parsedDate = SimpleDateFormat(DATE_FORMAT_PARSED).parse(date)
             val dateFormatToShow = SimpleDateFormat(DATE_FORMAT_TO_SHOW, Locale.ENGLISH)
             dateFormatToShow.format(parsedDate)
         } catch (e: ParseException) {

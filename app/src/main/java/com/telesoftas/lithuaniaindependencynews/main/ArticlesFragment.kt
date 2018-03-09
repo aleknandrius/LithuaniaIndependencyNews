@@ -2,6 +2,8 @@ package com.telesoftas.lithuaniaindependencynews.main
 
 import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.telesoftas.lithuaniaindependencynews.GlideApp
 import com.telesoftas.lithuaniaindependencynews.R
 import com.telesoftas.lithuaniaindependencynews.dependencyRetriever
@@ -18,10 +21,6 @@ import com.telesoftas.lithuaniaindependencynews.utils.base.view.BaseNetworkView
 import com.telesoftas.lithuaniaindependencynews.utils.entity.Article
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_articles.*
-import android.support.v4.view.ViewCompat
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.widget.SwipeRefreshLayout
-import android.widget.ImageView
 
 
 class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.View {
@@ -30,7 +29,7 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
     private lateinit var adapter: ArticlesAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
-    var list = ArrayList<Article>()
+    private var list = ArrayList<Article>()
     var isLastPage = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -72,12 +71,7 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener)
-        swipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                presenter.onScreenLoaded()
-            }
-
-        })
+        swipeRefreshLayout.setOnRefreshListener { presenter.onScreenLoaded() }
     }
 
     private fun onArticleClicked(article: Article, imageView: ImageView) {
@@ -114,7 +108,7 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
     }
 
     override fun showArticles(list: List<Article>) {
-        swipeRefreshLayout.setRefreshing(false)
+        swipeRefreshLayout.isRefreshing = false
         this.list.clear()
         addArticles(list)
     }

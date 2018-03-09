@@ -9,7 +9,7 @@ import org.junit.Test
 import org.mockito.Mockito
 
 private val service = Mockito.mock(ArticlesService::class.java)
-private val articles = ArticleList("",-1,ArrayList<Article>())
+private val articles = ArticleList(ArrayList<Article>())
 private val response = Single.just(articles)
 private lateinit var model: ArticlesModel
 

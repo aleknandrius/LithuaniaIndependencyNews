@@ -31,7 +31,7 @@ class ArticleDetailsActivity : AppCompatActivity() {
                 return true
             }
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setUpView() {

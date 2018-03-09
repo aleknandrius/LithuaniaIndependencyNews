@@ -34,7 +34,7 @@ class ArticlesAdapter(
         val marginInPx = TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 DEFAULT_MARGIN_DP,
-                parent.resources.getDisplayMetrics()
+                parent.resources.displayMetrics
         ).toInt()
         lp.setMargins(marginInPx, marginInPx, marginInPx, marginInPx)
         view.layoutParams = lp
