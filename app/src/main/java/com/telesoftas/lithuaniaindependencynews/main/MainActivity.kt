@@ -13,6 +13,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolbar()
+        showFragment()
+    }
+
+    private fun showFragment() {
+        supportFragmentManager.beginTransaction()
+                .add(
+                        R.id.fragmentFrameLayout,
+                        ArticlesFragment.newInstance(),
+                        FRAG_TAG
+                ).commit()
     }
 
     private fun initToolbar() {
@@ -25,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val FRAG_TAG = "articleFragment"
         fun createIntent(context: Context): Intent {
             return Intent(
                     context,
