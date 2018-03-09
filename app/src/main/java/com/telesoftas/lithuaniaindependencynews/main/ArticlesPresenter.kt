@@ -29,7 +29,7 @@ class ArticlesPresenter(
                         override fun onSuccess(response: List<Article>) {
                             onView {
                                 hideLoadingView()
-                                showArticles(response)
+                                addArticles(response)
                             }
                         }
                     })

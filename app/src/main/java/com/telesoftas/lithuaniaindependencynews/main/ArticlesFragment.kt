@@ -12,13 +12,20 @@ import android.view.ViewGroup
 import com.telesoftas.lithuaniaindependencynews.GlideApp
 import com.telesoftas.lithuaniaindependencynews.R
 import com.telesoftas.lithuaniaindependencynews.dependencyRetriever
+import com.telesoftas.lithuaniaindependencynews.details.ArticleDetailsActivity
 import com.telesoftas.lithuaniaindependencynews.utils.base.fragment.BaseNetworkFragment
 import com.telesoftas.lithuaniaindependencynews.utils.base.view.BaseNetworkView
 import com.telesoftas.lithuaniaindependencynews.utils.entity.Article
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_articles.*
+import android.support.v4.view.ViewCompat
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.widget.SwipeRefreshLayout
+import android.widget.ImageView
+
 
 class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.View {
+
     private lateinit var presenter: ArticlesScreen.Presenter
     private lateinit var adapter: ArticlesAdapter
     private lateinit var layoutManager: LinearLayoutManager
@@ -56,8 +63,8 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
     }
 
     private fun setupViews() {
-        adapter = ArticlesAdapter(GlideApp.with(this), list, {clickedArticle ->
-            onArticleClicked(clickedArticle)
+        adapter = ArticlesAdapter(GlideApp.with(this), list, { article, iv ->
+            onArticleClicked(article, iv)
         })
         layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = OrientationHelper.VERTICAL
@@ -65,9 +72,22 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
         recyclerView.addOnScrollListener(recyclerViewOnScrollListener)
+        swipeRefreshLayout.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                presenter.onScreenLoaded()
+            }
+
+        })
     }
 
-    private fun onArticleClicked(article: Article) {
+    private fun onArticleClicked(article: Article, imageView: ImageView) {
+        val intent = ArticleDetailsActivity.createIntent(context!!, article)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                activity!!,
+                imageView,
+                ViewCompat.getTransitionName(imageView))
+
+        startActivity(intent, options.toBundle())
     }
 
     private val recyclerViewOnScrollListener = object : RecyclerView.OnScrollListener() {
@@ -88,9 +108,15 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
         }
     }
 
-    override fun showArticles(list: List<Article>) {
-        this.list.addAll(list)
+    override fun addArticles(articles: List<Article>) {
+        this.list.addAll(articles)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun showArticles(list: List<Article>) {
+        swipeRefreshLayout.setRefreshing(false)
+        this.list.clear()
+        addArticles(list)
     }
 
     override fun setAllItemsLoaded() {

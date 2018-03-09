@@ -9,6 +9,7 @@ interface ArticlesScreen {
     interface View : BaseNetworkView {
         fun showArticles(list: List<Article>)
         fun setAllItemsLoaded()
+        fun addArticles(articles: List<Article>)
     }
 
     interface Presenter : BasePresenter<View> {
