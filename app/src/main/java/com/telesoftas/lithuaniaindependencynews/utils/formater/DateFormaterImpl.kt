@@ -17,7 +17,7 @@ class DateFormaterImpl: DateFormater {
     }
 
     companion object {
-        const val DATE_FORMAT_PARSED = "yyyy-mm-dd'T'hh:mm:ss"
+        const val DATE_FORMAT_PARSED = "yyyy-MM-dd'T'hh:mm:ss"
         const val DATE_FORMAT_TO_SHOW = "yyyy-MMMM-dd hh:mm"
     }
 
