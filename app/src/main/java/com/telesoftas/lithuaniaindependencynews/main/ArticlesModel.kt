@@ -7,19 +7,14 @@ import io.reactivex.Single
 class ArticlesModel(private val articleServices: ArticlesService
 ) : ArticlesScreen.Model {
     private var page = 0
-    var hasMoreArticles = true
+    private var hasMoreArticles = true
 
     override fun getFirstPage(): Single<List<Article>> {
-        page = 0
-        hasMoreArticles = true
-        return getArticlePage()
+        resetToInitialState()
+        return getNextPage()
     }
 
     override fun getNextPage(): Single<List<Article>> {
-        return getArticlePage()
-    }
-
-    private fun getArticlePage(): Single<List<Article>> {
         return articleServices.articles(SEARCH_QUERY, page + 1, PAGE_SIZE, API_KEY).map {
             page ++
             if(it.articles.size< PAGE_SIZE){
@@ -32,6 +27,13 @@ class ArticlesModel(private val articleServices: ArticlesService
     override fun hasMoreArticles(): Boolean {
         return hasMoreArticles
     }
+
+    private fun resetToInitialState() {
+        page = 0
+        hasMoreArticles = true
+    }
+
+
 
     companion object {
         const val SEARCH_QUERY= "lithuania independence"
