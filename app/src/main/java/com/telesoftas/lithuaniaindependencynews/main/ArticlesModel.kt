@@ -3,8 +3,9 @@ package com.telesoftas.lithuaniaindependencynews.main
 import com.telesoftas.lithuaniaindependencynews.BuildConfig.API_KEY
 import com.telesoftas.lithuaniaindependencynews.utils.entity.Article
 import io.reactivex.Single
+import javax.inject.Inject
 
-class ArticlesModel(private val articleServices: ArticlesService
+class ArticlesModel @Inject constructor(private val articleServices: ArticlesService
 ) : ArticlesScreen.Model {
     private var page = 0
     private var hasMoreArticles = true

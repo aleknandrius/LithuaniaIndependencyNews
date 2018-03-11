@@ -6,11 +6,12 @@ import com.telesoftas.lithuaniaindependencynews.utils.network.error.ErrorResolve
 import io.reactivex.Scheduler
 import io.reactivex.SingleObserver
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
-class ArticlesPresenter(
+class ArticlesPresenter @Inject constructor(
         private val model: ArticlesScreen.Model,
-        private val scheduler: Scheduler,
-        errorResolver: ErrorResolver
+                                           private val scheduler: Scheduler,
+                                           errorResolver: ErrorResolver
 ) : BaseNetworkPresenter<ArticlesScreen.View>(errorResolver),
         ArticlesScreen.Presenter {
     override fun onLoadNext() {

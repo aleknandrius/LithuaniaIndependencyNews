@@ -1,6 +1,7 @@
 package com.telesoftas.lithuaniaindependencynews
 
 import android.content.Context
+import com.telesoftas.lithuaniaindependencynews.app.LithuaniaIndependencyNewsApplication
 import com.telesoftas.lithuaniaindependencynews.utils.network.error.DefaultNetworkErrorMessenger
 import com.telesoftas.lithuaniaindependencynews.utils.network.error.NetworkErrorResolver
 import com.telesoftas.lithuaniaindependencynews.utils.network.RestClientBuilder

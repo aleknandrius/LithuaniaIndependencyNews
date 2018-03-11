@@ -14,18 +14,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.telesoftas.lithuaniaindependencynews.GlideApp
 import com.telesoftas.lithuaniaindependencynews.R
-import com.telesoftas.lithuaniaindependencynews.dependencyRetriever
 import com.telesoftas.lithuaniaindependencynews.details.ArticleDetailsActivity
 import com.telesoftas.lithuaniaindependencynews.utils.base.fragment.BaseNetworkFragment
 import com.telesoftas.lithuaniaindependencynews.utils.base.view.BaseNetworkView
 import com.telesoftas.lithuaniaindependencynews.utils.entity.Article
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_articles.*
+import javax.inject.Inject
 
 
 class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.View {
 
-    private lateinit var presenter: ArticlesScreen.Presenter
+    @Inject lateinit var presenter: ArticlesScreen.Presenter
     private lateinit var adapter: ArticlesAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
@@ -38,7 +37,6 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupInjections()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,14 +49,6 @@ class ArticlesFragment : BaseNetworkFragment(), BaseNetworkView, ArticlesScreen.
     override fun onDestroy() {
         super.onDestroy()
         presenter.dropView()
-    }
-
-    private fun setupInjections() {
-        val retriever = context!!.dependencyRetriever
-        val service = retriever.getService(ArticlesService::class.java)
-        val model = ArticlesModel(service)
-        val resolver = retriever.networkErrorResolver
-        presenter = ArticlesPresenter(model, AndroidSchedulers.mainThread(), resolver)
     }
 
     private fun setupViews() {

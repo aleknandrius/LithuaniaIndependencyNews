@@ -7,8 +7,9 @@ import com.telesoftas.lithuaniaindependencynews.R
 import com.telesoftas.lithuaniaindependencynews.utils.base.view.BaseNetworkView
 import com.telesoftas.lithuaniaindependencynews.utils.dialogs.InfoDialogFragment
 import com.telesoftas.lithuaniaindependencynews.utils.network.error.NetworkError
+import dagger.android.support.DaggerFragment
 
-abstract class BaseNetworkFragment : Fragment(), BaseNetworkView {
+abstract class BaseNetworkFragment : DaggerFragment(), BaseNetworkView {
 
     override fun showErrorDialog(error: NetworkError) {
         InfoDialogFragment.newInstance(error.title, error.message)
